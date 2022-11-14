@@ -17,23 +17,36 @@ class Bike
   end
 
   def rent!
-    self.rented = true
+    if self.rented
+      puts "Bike is already rented"
+    else
+      self.rented = true
+    end
   end
 
   def add_cargo(item)
-    self.cargo_contents << item
+    if self.basket_remaining_capacity == 0
+      puts "Cargo limit has been reached"
+    else
+      self.cargo_contents << item
+    end
   end
 
   def remove_cargo(item)
-    self.cargo_contents.remove(item)
+    for cargo in self.cargo_contents do
+      if cargo == item
+        self.cargo_contents.remove(item)
+        return
+      end
+    end
+    puts "Item not found"
   end
 
-  def pannier_capacity
+  def basket_capacity
     MAX_CARGO_ITEMS
   end
 
-  def pannier_remaining_capacity
+  def basket_remaining_capacity
     MAX_CARGO_ITEMS - self.cargo_contents.size
   end
-
 end
